@@ -43,12 +43,12 @@ class TaskService {
             throw new Exception ( $errors [0].' '.$errors[1]);
     }
 
-    public function createNewTask( $name, $email, $task ) {
+    public function createNewTask( $name, $email, $task, $done =1 ) {
         try {
             $pdo = DataBase::connect();
             $this->validateTaskParams($name, $email, $task);
-            $stmt = $pdo->prepare("INSERT INTO tasks (name, email, task) VALUES (?,?,?)");
-			$stmt->execute([$name,$email,$task]);
+            $stmt = $pdo->prepare("INSERT INTO tasks (name, email, task, done) VALUES (?,?,?,?)");
+			$stmt->execute([$name,$email,$task,$done]);
             DataBase::disconnect();;
             } catch (Exception $e) {
             DataBase::disconnect();

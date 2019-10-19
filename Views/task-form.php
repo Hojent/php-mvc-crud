@@ -14,10 +14,13 @@
                 <label for="text">Text:</label>
                 <textarea class="form-control" name="task"><?php print htmlentities($task); ?></textarea>
             </div>
-            <div class="form-group">
-                <label for="done">Done:</label>
-                <input type="checkbox" name="done" value="<?php echo $done; ?>" <?php if ($done == 0) echo 'checked'; ?> />
-            </div>
+            <?php
+                if ( isset($_SESSION['USERNAME']) ) { ?>
+                 <div class="form-group">
+                    <label for="done">Done:</label>
+                    <input type="checkbox" name="done" value="<?php echo $done; ?>" <?php if ($done == 0) echo 'checked'; ?> />
+                 </div>
+                <?php }  ?>
                 <input type="hidden" name="form-submitted" value="1" />
                 <input type="submit" class="btn btn-send" value="Submit" />
             </form>

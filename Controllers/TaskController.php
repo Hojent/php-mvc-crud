@@ -51,19 +51,19 @@ class TaskController
     public function saveTask() {
 
         $title = 'Add new task';
-
+        $form = 'new';
         $name = '';
         $email = '';
         $task = '';
+
 
         if ( isset($_POST['form-submitted']) ) {
 
             $name       = isset($_POST['name']) ?   $_POST['name']  :NULL;
             $email      = isset($_POST['email'])?   $_POST['email'] :NULL;
             $task    = isset($_POST['task'])? $_POST['task']:NULL;
-
             try {
-                $this->taskService->createNewTask($name, $email, $task);
+                $this->taskService->createNewTask($name, $email, $task, $done = 1);
                 $this->redirect('index.php');
                 return;
             } catch (Exception $exception) { echo 'Error: '. $exception->getMessage(); }
