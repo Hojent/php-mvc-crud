@@ -3,11 +3,11 @@ require_once 'DataBase.php';
 
 class TaskService {
 
-    public function getAllTasks($order)
+    public function getAllTasks($order = 'name')
     {
         try {
             $pdo = DataBase::connect();
-            $sth = $pdo->prepare("SELECT * FROM tasks");
+            $sth = $pdo->prepare("SELECT * FROM tasks ORDER BY $order");
             $sth->execute();
             $result = $sth->fetchAll();
             DataBase::disconnect();
@@ -27,7 +27,7 @@ class TaskService {
         }catch(PDOException  $e ){
             echo "Error: ".$e;
         }
-        return $result;
+        return ($result);
     }
 
     private function validateTaskParams( $name, $email) {
@@ -56,19 +56,34 @@ class TaskService {
         }
     }
 
-     public function editTask( $name, $email, $task, $id ) {
+     public function updateTask( $name, $email, $task, $id, $done ) {
          try {
              $pdo = DataBase::connect();
              $this->validateTaskParams($name, $email);
 
              $stmt = $pdo->prepare(
-                 "UPDATE tasks SET name = ?, email = ?, task = ? 
+                 "UPDATE tasks SET name = ?, email = ?, task = ? , done = ?, edit = true
                            WHERE id = $id");
-             $stmt->execute([$name,$email,$task]);
+             $stmt->execute([$name, $email, $task, $done]);
              DataBase::disconnect();;
          } catch (Exception $e) {
              DataBase::disconnect();
              throw $e;
          }
     }
+
+    public function getUser($login, $password) {
+        try{
+            $pdo = DataBase::connect();
+            $sth = $pdo->prepare("SELECT * FROM users WHERE login = '".$login."' AND password = '".$password."' ");
+            $sth->execute();
+            $result = $sth->fetch();
+            DataBase::disconnect();
+        }catch(PDOException  $e ){
+            echo "Error: ".$e;
+        }
+        return $result;
+    }
+
+
 }
