@@ -1,6 +1,6 @@
 <?php
 require_once 'Models/TaskService.php';
-
+session_start();
 class TaskController
 {
     private $taskService = NULL;
@@ -90,7 +90,9 @@ class TaskController
                 return;
             } catch (Exception $exception) { echo 'Error: '. $exception->getMessage(); }
         }
-        include 'Views/task-form.php';
+        if ( isset($_SESSION['USERNAME']) ) {
+            include 'Views/task-form.php';
+        } else {header("location: ../Views/login-form.php");}
     }
 
     public function showError($title, $message) {
