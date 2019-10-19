@@ -1,6 +1,6 @@
 <?php include ('head.php')?>
 <div class="container">
-    <h4>Edit task</h4>
+    <h4><?php echo $title; ?></h4>
         <form method="POST" action="" class="container-fluid">
             <div class="form-group">
                 <label for="name">Name:</label>
@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label for="done">Done:</label>
-                <input type="checkbox" name="done" value="<?php echo $done; ?>" <?php if ($done == 1) echo 'checked'; ?> />
+                <input type="checkbox" name="done" value="<?php echo $done; ?>" <?php if ($done == 0) echo 'checked'; ?> />
             </div>
                 <input type="hidden" name="form-submitted" value="1" />
                 <input type="submit" class="btn btn-send" value="Submit" />

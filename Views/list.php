@@ -12,9 +12,9 @@
                     <th><a href="?orderby=name">Name</a></th>
                     <th><a href="?orderby=email">Email</a></th>
                     <th>Text</th>
-                    <th>Done</th>
+                    <th><a href="?orderby=done">Status</a></th>
                     <?php if ($_SESSION['USERNAME'] == 'admin') {
-                        echo '<th>Edit</th>';
+                        echo '<th>Action</th>';
                     }
                     ?>
                 </tr>
@@ -32,7 +32,7 @@
                         <td><?php print htmlentities ($task['task']); ?>
                         </td>
                         <td><?php
-                                if ($task['done']) {
+                                if ($task['done'] == 0) {
                                     echo '<span class=" green-bg container-fluid"><b>Done</b></span>';
                                 } else {
                                     echo 'In progress';
@@ -58,12 +58,12 @@
     if ( isset($_SESSION['USERNAME']) ) {
     echo 'Access allowed!'."\n";
     echo 'Hello, '. $_SESSION['USERNAME'].PHP_EOL;?>
-    <a href="/Views/logout.php">Выйти</a>
+    <a href="/Views/logout.php">Logout</a>
 
 <?php } else {
-    echo 'Вы не авторизованы'.PHP_EOL;
+    echo 'Access denied'.PHP_EOL;
     ?>
-    <a href="/Views/login-form.php">Авторизация</a>
+    <a href="/Views/login-form.php">Login</a>
     <?php } ?>
     </div>
     </div>

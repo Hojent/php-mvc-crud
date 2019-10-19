@@ -74,7 +74,7 @@ class TaskController
             $name       = isset($_POST['name']) ?   $_POST['name']  : NULL;
             $email      = isset($_POST['email']) ?   $_POST['email'] : NULL;
             $task    = isset($_POST['task']) ? $_POST['task'] : NULL;
-            $done = isset($_POST['done']) ? 1 : 0;
+            $done = isset($_POST['done']) ? 0 : 1;
             try {
                 $this->taskService->updateTask($name, $email, $task, $id, $done);
                 $this->redirect('index.php');
