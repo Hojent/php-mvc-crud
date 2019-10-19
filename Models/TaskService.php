@@ -3,11 +3,11 @@ require_once 'DataBase.php';
 
 class TaskService {
 
-    public function getAllTasks($order = 'name')
+    public function getAllTasks($order = 'name', $paginate, $start_from)
     {
         try {
             $pdo = DataBase::connect();
-            $sth = $pdo->prepare("SELECT * FROM tasks ORDER BY $order");
+            $sth = $pdo->prepare("SELECT * FROM tasks ORDER BY $order LIMIT $start_from, $paginate");
             $sth->execute();
             $result = $sth->fetchAll();
             DataBase::disconnect();
@@ -16,8 +16,6 @@ class TaskService {
         }
         return $result;
     }
-
-
 
     public function getTask($id) {
         try{
@@ -87,5 +85,20 @@ class TaskService {
         return $result;
     }
 
+    public function paginator ($limit)
+    {
+        try {
+            $pdo = DataBase::connect();
+            $sth = $pdo->prepare("SELECT COUNT(id) FROM tasks");
+            $sth->execute();
+            $result = $sth->fetchColumn();
+
+            DataBase::disconnect();
+            $total_pages = ceil($result / $limit);
+            return $total_pages;
+        } catch (PDOException  $e ){
+            echo "Error: ".$e;
+        }
+    }
 
 }

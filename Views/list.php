@@ -49,6 +49,16 @@
         </table>
 </div>
 </div>
+    <br>
+    <div class="container">
+        <?php
+            $pagLink = "<ul class='pagination'>";
+            for ($i = 1; $i <= $total; $i++) {
+                $pagLink .= "<li class='page-item'><a class='page-link' href='index.php?page=".$i."'>".$i."</a></li>";
+            }
+            echo $pagLink . "</ul>";
+        ?>
+    </div>
 
     <br>
     <div class="container">

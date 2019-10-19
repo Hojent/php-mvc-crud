@@ -34,8 +34,17 @@ class TaskController
     }
 
     public function listTask() {
+        $paginate = 3;
         $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : "name";
-        $tasks = $this->taskService->getAllTasks($orderby);
+        if (isset($_GET["page"])) {
+            $page  = $_GET["page"];
+        }
+        else{
+            $page=1;
+        };
+        $start_from = ($page-1) * $paginate;
+        $tasks = $this->taskService->getAllTasks($orderby, $paginate, $start_from);
+        $total = $this->taskService->paginator($paginate);
         include "Views/list.php";
     }
 
